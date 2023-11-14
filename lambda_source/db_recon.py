@@ -7,7 +7,7 @@ from reset_password import reset_user_password
 dynamodb = boto3.resource('dynamodb')
 onboarded_db_list = 'onboarded_db_list'
 
-def iterate_list(event, context):
+def db_recon(event, context):
     # Read the list of databases from the 'onboarded_db_list' DynamoDB table
     onboarded_db_list_table = dynamodb.Table(onboarded_db_list)
     try:
