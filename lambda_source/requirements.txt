@@ -2,4 +2,4 @@ cffi # support oralcedb library
 pymysql
 oracledb
 psycopg2
-boto3
+#boto3 # this is not needed for lambda packaging
