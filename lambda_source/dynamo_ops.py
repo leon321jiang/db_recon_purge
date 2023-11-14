@@ -5,7 +5,7 @@ dynamodb = boto3.resource('dynamodb')
 db_list_table_name = 'onboarded_db_list'
 deleted_table_name = 'records_deleted'
 
-def log_unreachable_host_record(db_name, db_host, db_user):
+def log_unreachable_host_record(db_host, db_name, db_user):
     table = dynamodb.Table('records_deleted')
     try:
         table.put_item(

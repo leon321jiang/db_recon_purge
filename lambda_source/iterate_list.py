@@ -18,14 +18,14 @@ def iterate_list(event, context):
 
     # Process each onboarded database
     for db_info in onboarded_dbs:
-        conn = test_db_connection(db_info['db_engine'], db_info['db_name'], db_info['db_host'], db_info['db_user'], db_info['db_password'])
+        conn = test_db_connection(db_info['db_engine'], db_info['db_host'], db_info['db_name'], db_info['db_user'], db_info['db_password'])
         if conn['statusCode'] == 592: # "failed to connect to" 
-            log_unreachable_host_record(db_info['db_name'], db_info['db_host'], db_info['db_user'])
+            log_unreachable_host_record(db_info['db_host'], db_info['db_name'], db_info['db_user'])
             delete_dynamodb_record(db_info['db_host'])
         elif conn['statusCode'] == 593: #"failed to authenticate"
-            reset_user_password(db_info['db_name'], db_info['db_user'])
+            reset_user_password(db_info['db_host'], db_info['db_name'], db_info['db_user'])
         elif conn['statusCode'] == 200:  #"successfully connected to"
-            print(f"successfuly connected to {db_info['db_name']}")
+            print(f"successfuly connected to {db_info['db_host']}")
             return
         else:
             print(f"An error occurred with stau code: {conn['statusCode']}, and error message: {conn['body']}")
