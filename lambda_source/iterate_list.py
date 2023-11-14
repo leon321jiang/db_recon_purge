@@ -1,6 +1,6 @@
 import boto3
 from botocore.exceptions import ClientError
-from db_conn import test_db_connection
+from db_helper import test_db_connection
 from dynamo_ops import log_unreachable_host_record, delete_dynamodb_record
 from reset_password import reset_user_password
 

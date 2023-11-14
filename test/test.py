@@ -1,4 +1,4 @@
-from lambda_source.db_conn import test_db_connection
+from lambda_source.db_helper import test_db_connection
 from lambda_source.dynamo_ops import log_unreachable_host_record, delete_dynamodb_record
 from lambda_source.reset_password import reset_user_password
 from lambda_source.iterate_list import iterate_list
