@@ -1,7 +1,7 @@
 import boto3
 from botocore.exceptions import ClientError
 from db_helper import test_db_connection
-from dynamo_ops import log_unreachable_host_record, delete_dynamodb_record
+from dynamo_ops import delete_db_host_record
 from reset_password import reset_user_password
 
 dynamodb = boto3.resource('dynamodb')
@@ -20,8 +20,7 @@ def db_recon(event, context):
     for db_info in onboarded_dbs:
         conn = test_db_connection(db_info['db_engine'], db_info['db_host'], db_info['db_name'], db_info['db_user'], db_info['db_password'])
         if conn['statusCode'] == 592: # "failed to connect to" 
-            log_unreachable_host_record(db_info['db_host'], db_info['db_name'], db_info['db_user'])
-            delete_dynamodb_record(db_info['db_host'])
+            delete_db_host_record(db_info['db_host'])
         elif conn['statusCode'] == 593: #"failed to authenticate"
             reset_user_password(db_info['db_host'], db_info['db_name'], db_info['db_user'])
         elif conn['statusCode'] == 200:  #"successfully connected to"
