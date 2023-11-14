@@ -21,8 +21,10 @@ def db_recon(event, context):
         conn = test_db_connection(db_info['db_engine'], db_info['db_host'], db_info['db_name'], db_info['db_user'], db_info['db_password'])
         if conn['statusCode'] == 592: # "failed to connect to" 
             delete_db_host_record(db_info['db_host'])
+
         elif conn['statusCode'] == 593: #"failed to authenticate"
             reset_user_password(db_info['db_host'], db_info['db_name'], db_info['db_user'])
+            
         elif conn['statusCode'] == 200:  #"successfully connected to"
             print(f"successfuly connected to {db_info['db_host']}")
             return

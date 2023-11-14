@@ -44,6 +44,6 @@ def delete_db_host_record(db_host):
 
 #TODO need proper exception handling
 
-def update_db_writer_arn(db_host):
-    print(f"updating db writer arn for {db_host}")
+def update_db_writer_arn(db_host, db_writer_arn):
+    print(f"updating db writer arn for {db_host} with new {db_writer_arn}")
     #TODO add real function
