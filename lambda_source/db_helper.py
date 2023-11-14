@@ -2,17 +2,17 @@ import pymysql
 import oracledb
 import psycopg2
 
-def test_db_connection(db_engine, db_host, db_name, db_user, db_password):
+def test_db_connection(db_engine, db_name, db_host, db_user, db_password):
     try:
         if db_engine == 'mysql':
             conn = pymysql.connect(host=db_host, user=db_user, passwd=db_password, db=db_name, connect_timeout=5)
         elif db_engine == 'oracle':
             # Set the DSN (Data Source Name)
-            dsn = oracledb.makedsn(host=db_host, port=1521, service_name=db_name)
+            dsn = oracledb.makedsn(host=db_host, port=1521, service_name=db_host)
             # Connect to the database
             conn = oracledb.connect(user=db_user, password=db_password, dsn=dsn)
         elif db_engine == 'postgres':
-            conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_password)
+            conn = psycopg2.connect(host=db_host, database=db_host, user=db_user, password=db_password)
         else:
             print(f"Unsupported database engine {db_engine}")
             return {'statusCode': 591, 'body': f"Unsupported database engine {db_engine}"}
@@ -26,8 +26,8 @@ def test_db_connection(db_engine, db_host, db_name, db_user, db_password):
         print(str(e))
         if "not known" in str(e).lower() or "Network is unreachable" in str(e).lower():
             # Host not reachable for MySQL, Oracle, PostgreSQL
-            print(f"failed to reach to {db_host}")
-            return {'statusCode': 592, 'body': f"Failed to reach to {db_host}"}
+            print(f"failed to reach to  {db_host}")
+            return {'statusCode': 592, 'body': f"failed to reach to  {db_host}"}
 
         elif "access denied" in str(e).lower():
             # Failed to authenticate 
