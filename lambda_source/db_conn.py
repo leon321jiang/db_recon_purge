@@ -8,7 +8,6 @@ def test_db_connection(db_engine, db_host, db_name, db_user, db_password):
     try:
         if db_engine == 'mysql':
             print("mysql")
-            conn = pymysql.connect(host=db_host, user=db_user, passwd=db_password, db=db_name)
             conn = pymysql.connect(host=db_host, user=db_user, passwd=db_password, db=db_name, connect_timeout=5)
         elif db_engine == 'oracle':
             dsn = cx_Oracle.makedsn(db_host, 1521, service_name=db_name)
