@@ -1,8 +1,6 @@
 import pymysql
 import cx_Oracle
 import psycopg2
-from dynamo_ops import log_unreachable_host_record, delete_dynamodb_record
-from reset_password import reset_user_password
 
 def test_db_connection(db_engine, db_host, db_name, db_user, db_password):
     try:
@@ -15,24 +13,26 @@ def test_db_connection(db_engine, db_host, db_name, db_user, db_password):
         elif db_engine == 'postgres':
             conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_password)
         else:
-            print("Unsupported database engine")
-            return
-
+            print(f"Unsupported database engine {db_engine}")
+            return {'statusCode': 591, 'body': f"Unsupported database engine {db_engine}"}
+   
         # If the connection is successful, do nothing
-        print(f"successful connected to {db_host}")
+        print(f"Successfully connected to {db_host}")
         conn.close()
+        return {'statusCode': 200, 'body': f"Successfully connected to {db_host}"}
 
     except Exception as e:
         if "not known" in str(e) or "Network is unreachable" in str(e):
             # Host not reachable for MySQL, Oracle, PostgreSQL
             print(f"failed to reach to {db_host}")
-            log_unreachable_host_record(db_host, db_name, db_user)
-            delete_dynamodb_record(db_name)
+            return {'statusCode': 592, 'body': f"Failed to reach to {db_host}"}
+
         elif isinstance(e, (pymysql.OperationalError, cx_Oracle.DatabaseError, psycopg2.OperationalError)) and 'authentication' in str(e).lower():
             # Failed to authenticate
             print(f"failed to authenticate to {db_host} with user {db_user}")
-            reset_user_password(db_host, db_user)
+            return {'statusCode': 593, 'body': f"Failed to authenticate to {db_host} with user {db_user}"}
         else:
             print(f"An error occurred: {e}")
+            return {'statusCode': 599, 'body': f"An error occurred: {e}"}
 
 

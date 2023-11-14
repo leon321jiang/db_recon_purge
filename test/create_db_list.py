@@ -20,6 +20,13 @@ def create_db_list():
             'db_user': 'db_admin',
             'db_password': 'QASEFduey34!'
         },
+                {
+            'db_name': 'testrdsmysql',
+            'db_engine': 'mysql',
+            'db_host': temp_mysql_host,
+            'db_user': 'db_admin',
+            'db_password': 'QASEFduey34!badone'
+        },
         {
             'db_name': 'testrdsoracle',
             'db_engine': 'oracle',
