@@ -6,26 +6,19 @@ session = boto3.Session()
 dynamodb = session.resource('dynamodb')
 db_list_table_name = 'onboarded_db_list'
 
-def create_db_list():
+def create_db_list(option):
     # Define the table
     table = dynamodb.Table('onboarded_db_list')
     temp_mysql_host = 'mydbinstance.cu53kqprya26.us-west-2.rds.amazonaws.com'
 
     # Define the items to insert
-    items = [
+    items_good = [
         {
             'db_name': 'testrdsmysql',
             'db_engine': 'mysql',
             'db_host': temp_mysql_host,
             'db_user': 'db_admin',
             'db_password': 'QASEFduey34!'
-        },
-                {
-            'db_name': 'testrdsmysql',
-            'db_engine': 'mysql',
-            'db_host': temp_mysql_host,
-            'db_user': 'db_admin',
-            'db_password': 'QASEFduey34!badone'
         },
         {
             'db_name': 'testrdsoracle',
@@ -49,6 +42,41 @@ def create_db_list():
             'db_password': 'dkedl38578374d!@'
         }
     ]
+
+    items_incorrect_pass = [
+        {
+            'db_name': 'testrdsmysql',
+            'db_engine': 'mysql',
+            'db_host': temp_mysql_host,
+            'db_user': 'db_admin',
+            'db_password': 'QASEFduey34!ddddd'
+        },
+        {
+            'db_name': 'testrdsoracle',
+            'db_engine': 'oracle',
+            'db_host': 'database2-host',
+            'db_user': 'db_admin',
+            'db_password': 'QASEFduey34!ddddd'
+        },
+        {
+            'db_name': 'testrdspostgres',
+            'db_engine': 'postgres',
+            'db_host': 'database3-host',
+            'db_user': 'db_admin',
+            'db_password': 'QASEFduey34!dddd'
+        },
+        {
+            'db_name': 'database4',
+            'db_engine': 'sqlserver',
+            'db_host': 'database4-host',
+            'db_user': 'admin4',
+            'db_password': 'dkedl38578374d!@'
+        }
+    ]
+    if option == 'good_password':
+        items = items_good
+    else:
+        items = items_incorrect_pass
 
     # Write items to the table
     for item in items:

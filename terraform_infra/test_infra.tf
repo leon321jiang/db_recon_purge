@@ -47,7 +47,8 @@ resource "aws_db_instance" "my_db_instance" {
   identifier              = var.db_instance_identifier
 }
 
-
+/*
+TODO: the following two don't work right now, need to be fixed
 # PostgreSQL RDS instance 
 resource "aws_db_instance" "postgres_instance" {
   allocated_storage    = 20
@@ -59,8 +60,7 @@ resource "aws_db_instance" "postgres_instance" {
   parameter_group_name = "default.postgres13"
   skip_final_snapshot  = true
 }
-/*
-TODO: the following two don't work right now, need to be fixed
+
 # Oracle RDS instance
 resource "aws_db_instance" "oracle_instance" {
   allocated_storage    = 20

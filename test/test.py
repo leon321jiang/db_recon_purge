@@ -8,7 +8,13 @@ from create_db_list import create_db_list
 #test_db_connection('mysql', 'mydb-instance.cg034hpkmmjt.us-west-2.rds.amazonaws.com', 'mydbname', 'mydbuser', 'mydbpassword')
 
 # create a list with a mixture of dummy and real db instance info 
-create_db_list()
+#create_db_list('good_password')
+
+# iterate a list from dynamodb table
+#iterate_list('dummy_event','dummy_context')
+
+# create a list with a mixture of dummy and real db instance info but bad passord
+create_db_list('incorrect_password')
 
 # iterate a list from dynamodb table
 iterate_list('dummy_event','dummy_context')

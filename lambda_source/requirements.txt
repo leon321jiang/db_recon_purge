@@ -1,0 +1,5 @@
+cffi # support oralcedb library
+pymysql
+oracledb
+psycopg2
+boto3
